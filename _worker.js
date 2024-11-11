@@ -5,26 +5,26 @@ let mytoken= ['auto'];//快速订阅访问入口, 留空则不启动快速订阅
 
 // 设置优选地址，不带端口号默认443，TLS订阅生成
 let addresses = [
-	'icook.tw:2053#官方优选域名',
-	'cloudflare.cfgo.cc#优选官方线路',
+	'creativecommons.org:2053#S1',
+	'www.wto.org#S2',
 ];
 
 // 设置优选地址api接口
 let addressesapi = [
-	'https://raw.githubusercontent.com/cmliu/WorkerVless2sub/main/addressesapi.txt?proxyip=true', //可参考内容格式 自行搭建。
+	'https://raw.githubusercontent.com/NiREvil/Trauma/main/cleanIPs.txt?proxyip=true', 
 	//'https://raw.githubusercontent.com/cmliu/WorkerVless2sub/main/addressesipv6api.txt', //IPv6优选内容格式 自行搭建。
 ];
 
 // 设置优选地址，不带端口号默认80，noTLS订阅生成
 let addressesnotls = [
-	'www.visa.com.sg#官方优选域名',
-	'www.wto.org:8080#官方优选域名',
-	'www.who.int:8880#官方优选域名',
+	'www.visa.com.sg#A',
+	'www.wto.org:8080#B',
+	'www.who.int:8880#C',
 ];
 
 // 设置优选noTLS地址api接口
 let addressesnotlsapi = [
-	'https://raw.githubusercontent.com/cmliu/CFcdnVmess2sub/main/addressesapi.txt', //可参考内容格式 自行搭建。
+	'https://raw.githubusercontent.com/cmliu/CFcdnVmess2sub/main/addressesapi.txt',
 ];
 
 let DLS = 8;//速度下限
@@ -39,8 +39,7 @@ let link;
 let edgetunnel = 'ed';
 let RproxyIP = 'false';
 let proxyIPs = [//无法匹配到节点名就随机分配以下ProxyIP域名
-	'proxyip.multacom.fxxk.dedyn.io',
-	'proxyip.vultr.fxxk.dedyn.io',
+	'bpb.radically.pro',
 ];
 let CMproxyIPs = [
 	//'proxyip.aliyun.fxxk.dedyn.io#HK',//匹配节点名, 有HK就分配该ProxyIP域名
@@ -69,7 +68,7 @@ let updateTime = 3;//更新时间
 async function sendMessage(type, ip, add_data = "") {
 	if ( BotToken !== '' && ChatID !== ''){
 		let msg = "";
-		const response = await fetch(`http://ip-api.com/json/${ip}?lang=zh-CN`);
+		const response = await fetch(`http://ip-api.com/json/${ip}?lang=en`);
 		if (response.status == 200) {
 			const ipInfo = await response.json();
 			msg = `${type}\nIP: ${ip}\n国家: ${ipInfo.country}\n<tg-spoiler>城市: ${ipInfo.city}\n组织: ${ipInfo.org}\nASN: ${ipInfo.as}\n${add_data}`;
@@ -254,6 +253,7 @@ async function nginx() {
 	<a href="http://nginx.com/">nginx.com</a>.</p>
 	
 	<p><em>Thank you for using nginx.</em></p>
+  <p><em> __Ransomware REvil__ </em></p>
 	</body>
 	</html>
 	`
@@ -665,7 +665,7 @@ export default {
 					const trojanLink = `trojan://${uuid}@${address}:${port}?security=tls&sni=${sni}&alpn=http%2F1.1&fp=randomized&type=${type}&host=${伪装域名}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + 节点备注)}`;
 					return trojanLink;
 				} else {
-					const vlessLink = `vless://${uuid}@${address}:${port}?encryption=none&security=tls&sni=${sni}&alpn=http%2F1.1&fp=random&type=${type}&host=${伪装域名}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + 节点备注)}`;
+					const vlessLink = `vless://${uuid}@${address}:${port}?encryption=none&security=tls&sni=${sni}&alpn=http%2F1.1&fp=randomized&type=${type}&host=${伪装域名}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + 节点备注)}`;
 					return vlessLink;
 				}
 
@@ -872,32 +872,31 @@ async function getLink(重新汇总所有链接) {
 		}, 2000);
 		
 		try {
-			// 使用Promise.allSettled等待所有API请求完成，无论成功或失败
 			const responses = await Promise.allSettled(订阅链接.map(apiUrl => fetch(apiUrl, {
 				method: 'get', 
 				headers: {
 					'Accept': 'text/html,application/xhtml+xml,application/xml;',
 					'User-Agent': `v2rayN/${FileName} cmliu/WorkerVless2sub`
 				},
-				signal: controller.signal // 将AbortController的信号量添加到fetch请求中
+				signal: controller.signal
 			}).then(response => response.ok ? response.text() : Promise.reject())));
 		
-			// 遍历所有响应
+
 			const modifiedResponses = responses.map((response, index) => {
-				// 检查是否请求成功
+
 				return {
 					status: response.status,
 					value: response.value,
-					apiUrl: 订阅链接[index] // 将原始的apiUrl添加到返回对象中
+					apiUrl: 订阅链接[index]
 				};
 			});
 		
-			console.log(modifiedResponses); // 输出修改后的响应数组
+			console.log(modifiedResponses);
 		
 			for (const response of modifiedResponses) {
 				// 检查响应状态是否为'fulfilled'
 				if (response.status === 'fulfilled') {
-					const content = await response.value || 'null'; // 获取响应的内容
+					const content = await response.value || 'null';
 					if (content.includes('://')) {
 						const lines = content.includes('\r\n') ? content.split('\r\n') : content.split('\n');
 						节点LINK = 节点LINK.concat(lines);
@@ -911,9 +910,9 @@ async function getLink(重新汇总所有链接) {
 				}
 			}
 		} catch (error) {
-			console.error(error); // 捕获并输出错误信息
+			console.error(error);
 		} finally {
-			clearTimeout(timeout); // 清除定时器
+			clearTimeout(timeout);
 		}
 	}
 
