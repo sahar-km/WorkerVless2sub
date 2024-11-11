@@ -1,57 +1,44 @@
-
-// 部署完成后在网址后面加上这个，获取订阅器默认节点，/auto
-
-let mytoken= ['auto'];//快速订阅访问入口, 留空则不启动快速订阅
-
-// 设置优选地址，不带端口号默认443，TLS订阅生成
+let mytoken= ['auto'];
 let addresses = [
 	'creativecommons.org:2053#S1',
 	'www.wto.org#S2',
 ];
 
-// 设置优选地址api接口
 let addressesapi = [
 	'https://raw.githubusercontent.com/NiREvil/Trauma/main/cleanIPs.txt?proxyip=true', 
-	//'https://raw.githubusercontent.com/cmliu/WorkerVless2sub/main/addressesipv6api.txt', //IPv6优选内容格式 自行搭建。
 ];
 
-// 设置优选地址，不带端口号默认80，noTLS订阅生成
 let addressesnotls = [
 	'www.visa.com.sg#A',
 	'www.wto.org:8080#B',
 	'www.who.int:8880#C',
 ];
 
-// 设置优选noTLS地址api接口
 let addressesnotlsapi = [
 	'https://raw.githubusercontent.com/cmliu/CFcdnVmess2sub/main/addressesapi.txt',
 ];
 
-let DLS = 8;//速度下限
-let addressescsv = [
-	//'https://raw.githubusercontent.com/cmliu/WorkerVless2sub/main/addressescsv.csv', //iptest测速结果文件。
-];
+let DLS = 8;
+let addressescsv = [];
 
 let subconverter = "SUBAPI.fxxk.dedyn.io"; //在线订阅转换后端，目前使用CM的订阅转换功能。支持自建psub 可自行搭建https://github.com/bulianglin/psub
 let subconfig = "https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/config/ACL4SSR_Online_Full_MultiMode.ini"; //订阅转换配置文件
-let noTLS = 'false'; //改为 true , 将不做域名判断 始终返回noTLS节点
+let noTLS = 'false';
 let link;
 let edgetunnel = 'ed';
 let RproxyIP = 'false';
-let proxyIPs = [//无法匹配到节点名就随机分配以下ProxyIP域名
+let proxyIPs = [
 	'bpb.radically.pro',
 ];
-let CMproxyIPs = [
-	//'proxyip.aliyun.fxxk.dedyn.io#HK',//匹配节点名, 有HK就分配该ProxyIP域名
-]
-let socks5DataURL = '';//'https://raw.githubusercontent.com/cmliu/WorkerVless2sub/main/socks5Data'
+let CMproxyIPs = []
+let socks5DataURL = '';
 let BotToken ='';
 let ChatID =''; 
-let proxyhosts = [//本地代理域名池
+let proxyhosts = [
 	//'ppfv2tl9veojd-maillazy.pages.dev',
 ];
-let proxyhostsURL = 'https://raw.githubusercontent.com/cmliu/CFcdnVmess2sub/main/proxyhosts';//在线代理域名池URL
-let EndPS = '';//节点名备注内容
+let proxyhostsURL = 'https://raw.githubusercontent.com/cmliu/CFcdnVmess2sub/main/proxyhosts';
+let EndPS = '';
 let 协议类型 = 'VLESS';
 let FileName = 'WorkerVless2sub';
 let SUBUpdateTime = 6; 
